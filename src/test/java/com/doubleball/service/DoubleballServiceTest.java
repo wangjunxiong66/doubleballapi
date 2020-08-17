@@ -1,6 +1,4 @@
-package service;
-
-import com.doubleball.service.DoubleballService;
+package com.doubleball.service;
 
 import javax.annotation.Resource;
 

@@ -1,3 +1,5 @@
+package com.doubleball;
+
 import com.doubleball.service.DoubleballService;
 import org.junit.Test;
 
