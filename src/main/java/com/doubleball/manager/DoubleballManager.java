@@ -1,5 +1,6 @@
 package com.doubleball.manager;
 
+import com.doubleball.entity.DoubleballRecord;
 import com.doubleball.entity.DoubleballStatistics;
 import com.doubleball.mapper.DoubleballCalculateMapper;
 import com.doubleball.mapper.DoubleballStatisticsMapper;
@@ -67,17 +68,70 @@ public class DoubleballManager {
         }
     }
 
+    //  插入新记录
+    public void insertBall(DoubleballRecord doubleballRecord){
+        int issue, red_one, red_two, red_three, red_four, red_five, red_six, blue;
+        String draw_prize_date;
+        issue = doubleballRecord.getIssue();
+        red_one = doubleballRecord.getRed_one();
+        red_two =doubleballRecord.getRed_two();
+        red_three = doubleballRecord.getRed_three() ;
+        red_four = doubleballRecord.getRed_four() ;
+        red_five = doubleballRecord.getRed_five() ;
+        red_six = doubleballRecord.getRed_six() ;
+        blue = doubleballRecord.getBlue();
+        draw_prize_date = doubleballRecord.getDraw_prize_date();
+        doubleballStatisticsMapper.insertBall(issue, red_one, red_two, red_three, red_four, red_five, red_six, blue, draw_prize_date);
+    }
+
     //  获取记录表所有记录
     public List<DoubleballStatistics> queryallball(){
         return doubleballStatisticsMapper.getBallByAll();
     }
 
+    //  通过页码获取记录表所有记录
+    public List<DoubleballStatistics> queryallballbypage(int page,int size){
+        return doubleballStatisticsMapper.getBallByAllAndPage((page-1)*size,size);
+    }
+
+    //  通过id获取记录
+    public DoubleballStatistics getBallById(int id){
+        return doubleballStatisticsMapper.getBallById(id);
+    }
+
+    //  获取记录的总数
+    public int getBallByAllCount(){
+        return doubleballStatisticsMapper.getBallByAllCount();
+    }
+
+    //  根据id修改记录
+    public int updateBallById(DoubleballStatistics doubleballStatistics){
+        int id, issue, red_one, red_two, red_three, red_four, red_five, red_six, blue;
+        String draw_prize_date;
+        id = doubleballStatistics.getId();
+        issue = doubleballStatistics.getIssue();
+        red_one = doubleballStatistics.getRed_one();
+        red_two =doubleballStatistics.getRed_two();
+        red_three = doubleballStatistics.getRed_three() ;
+        red_four = doubleballStatistics.getRed_four() ;
+        red_five = doubleballStatistics.getRed_five() ;
+        red_six = doubleballStatistics.getRed_six() ;
+        blue = doubleballStatistics.getBlue();
+        draw_prize_date = doubleballStatistics.getDraw_prize_date();
+        return doubleballStatisticsMapper.updateBallById(id,issue,red_one,red_two,red_three,red_four,red_five,red_six,blue,draw_prize_date);
+    }
+
+    //  通过id删除记录
+    public void deleteBallById(int id){
+        doubleballStatisticsMapper.deleteBallById(id);
+    }
+
     //  生成随机数字
-    public DoubleballStatistics getRandomNum(){
+    public DoubleballRecord getRandomNum(){
 
         int blueball;
         Random ranblue = new Random() ;
-        blueball=ranblue.nextInt(17);
+        blueball=ranblue.nextInt(16)+1;
         LOG.info("随机生成蓝球    "+blueball);
 
         int[] redball=new int[6];
@@ -96,15 +150,15 @@ public class DoubleballManager {
         }
         System.out.println("红球是："+redball[0]+" "+redball[1]+" "+redball[2]+" "+redball[3]+" "+redball[4]+" "+redball[5]);
 
-        DoubleballStatistics doubleballStatistics = new DoubleballStatistics();
-        doubleballStatistics.setRed_one(redball[0]);
-        doubleballStatistics.setRed_two(redball[1]);
-        doubleballStatistics.setRed_three(redball[2]);
-        doubleballStatistics.setRed_four(redball[3]);
-        doubleballStatistics.setRed_five(redball[4]);
-        doubleballStatistics.setRed_six(redball[5]);
-        doubleballStatistics.setBlue(blueball);
-        return doubleballStatistics;
+        DoubleballRecord doubleballRecord = new DoubleballRecord();
+        doubleballRecord.setRed_one(redball[0]);
+        doubleballRecord.setRed_two(redball[1]);
+        doubleballRecord.setRed_three(redball[2]);
+        doubleballRecord.setRed_four(redball[3]);
+        doubleballRecord.setRed_five(redball[4]);
+        doubleballRecord.setRed_six(redball[5]);
+        doubleballRecord.setBlue(blueball);
+        return doubleballRecord;
     }
 
     //   将统计数据插入到doubleballcalculate表

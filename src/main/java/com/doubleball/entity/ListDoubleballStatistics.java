@@ -9,7 +9,30 @@ import java.util.List;
  */
 public class ListDoubleballStatistics {
 
+    //  总的记录数量
+    private int count;
+
+    //  根据传进来的每页数量，计算页码数
+    private int pageSize;
+
     private List<DoubleballStatistics> list;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
 
     public List<DoubleballStatistics> getList() {
         return list;

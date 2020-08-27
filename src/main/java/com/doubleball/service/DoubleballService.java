@@ -1,5 +1,6 @@
 package com.doubleball.service;
 
+import com.doubleball.entity.DoubleballRecord;
 import com.doubleball.entity.DoubleballStatistics;
 import com.doubleball.entity.ListDoubleballStatistics;
 import com.doubleball.manager.DoubleballManager;
@@ -37,13 +38,7 @@ public class DoubleballService {
         doubleballManager.importHistoricalData();
     }
 
-    public ServiceResult<DoubleballStatistics> getRandomNum(){
-        LOG.info("当前是 {} 的 {} 方法",this.getClass().getName(),new Exception().getStackTrace()[0].getMethodName());
-        DoubleballStatistics doubleballStatistics = new DoubleballStatistics() ;
-        doubleballStatistics = doubleballManager.getRandomNum();
-        return ServiceResult.success(doubleballStatistics);
-    }
-
+    // 查询记录，没有查询条件
     public ServiceResult<ListDoubleballStatistics> queryallball(){
 
         List<DoubleballStatistics> list = doubleballManager.queryallball();
@@ -52,6 +47,57 @@ public class DoubleballService {
         return ServiceResult.success(listDoubleballStatistics);
     }
 
+    // 通过页码查询记录
+    public ServiceResult<ListDoubleballStatistics> queryallballbypage(int page,int size){
+
+        List<DoubleballStatistics> list = doubleballManager.queryallballbypage(page,size);
+        ListDoubleballStatistics listDoubleballStatistics = new ListDoubleballStatistics();
+        listDoubleballStatistics.setList(list);
+        int count = doubleballManager.getBallByAllCount();
+        listDoubleballStatistics.setCount(count);
+        int pageSize,temp;
+        temp = count%size;
+        if (temp==0){
+            pageSize=count/size;
+        } else {
+            pageSize=(int)(count/size)+1;
+        }
+        listDoubleballStatistics.setPageSize(pageSize);
+        return ServiceResult.success(listDoubleballStatistics);
+    }
+
+    //  通过id查询库中记录
+    public ServiceResult<DoubleballStatistics> getBallById(int id){
+        DoubleballStatistics doubleballStatistics =new DoubleballStatistics();
+        doubleballStatistics = doubleballManager.getBallById(id);
+        return ServiceResult.success(doubleballStatistics);
+    }
+
+    //  插入记录
+    public String insertBall(DoubleballRecord doubleballRecord){
+        doubleballManager.insertBall(doubleballRecord);
+        return "success" ;
+    }
+
+    //  根据id修改记录
+    public Integer updateBallById(DoubleballStatistics doubleballStatistics){
+        return doubleballManager.updateBallById(doubleballStatistics);
+    }
+
+    //  根据id删除记录
+    public void deleteBallById(int id){
+        doubleballManager.deleteBallById(id);
+    }
+
+    //  预测下一期，随机数据
+    public ServiceResult<DoubleballRecord> getRandomNum(){
+        LOG.info("当前是 {} 的 {} 方法",this.getClass().getName(),new Exception().getStackTrace()[0].getMethodName());
+        DoubleballRecord doubleballRecord =new DoubleballRecord();
+        doubleballRecord = doubleballManager.getRandomNum();
+        return ServiceResult.success(doubleballRecord);
+    }
+    
+    //  对各种球类出现次数的统计
     public void calculateBall(){
         List<DoubleballStatistics> list = doubleballManager.queryallball();
 
