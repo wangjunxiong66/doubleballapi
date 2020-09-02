@@ -1,5 +1,6 @@
 package com.doubleball.manager;
 
+import com.doubleball.entity.DoubleballCalculate;
 import com.doubleball.entity.DoubleballRecord;
 import com.doubleball.entity.DoubleballStatistics;
 import com.doubleball.mapper.DoubleballCalculateMapper;
@@ -29,7 +30,7 @@ public class DoubleballManager {
     @Autowired
     private DoubleballCalculateMapper doubleballCalculateMapper;
 
-    //  导入历史数据
+    //  导入历史数据到双色球信息统计表doubleballstatistics
     public void importHistoricalData(){
         // 以下是将原始数据导入到记录表中
         try {
@@ -68,7 +69,7 @@ public class DoubleballManager {
         }
     }
 
-    //  插入新记录
+    //  插入新记录到"双色球信息统计表doubleballstatistics"
     public void insertBall(DoubleballRecord doubleballRecord){
         int issue, red_one, red_two, red_three, red_four, red_five, red_six, blue;
         String draw_prize_date;
@@ -84,27 +85,27 @@ public class DoubleballManager {
         doubleballStatisticsMapper.insertBall(issue, red_one, red_two, red_three, red_four, red_five, red_six, blue, draw_prize_date);
     }
 
-    //  获取记录表所有记录
+    //  获取记录表所有记录（从"双色球信息统计表doubleballstatistics"）
     public List<DoubleballStatistics> queryallball(){
         return doubleballStatisticsMapper.getBallByAll();
     }
 
-    //  通过页码获取记录表所有记录
+    //  通过页码获取记录表所有记录（从"双色球信息统计表doubleballstatistics"）
     public List<DoubleballStatistics> queryallballbypage(int page,int size){
         return doubleballStatisticsMapper.getBallByAllAndPage((page-1)*size,size);
     }
 
-    //  通过id获取记录
+    //  通过id获取记录（从"双色球信息统计表doubleballstatistics"）
     public DoubleballStatistics getBallById(int id){
         return doubleballStatisticsMapper.getBallById(id);
     }
 
-    //  获取记录的总数
+    //  获取记录的总数（从"双色球信息统计表doubleballstatistics"）
     public int getBallByAllCount(){
         return doubleballStatisticsMapper.getBallByAllCount();
     }
 
-    //  根据id修改记录
+    //  根据id修改记录（从"双色球信息统计表doubleballstatistics"）
     public int updateBallById(DoubleballStatistics doubleballStatistics){
         int id, issue, red_one, red_two, red_three, red_four, red_five, red_six, blue;
         String draw_prize_date;
@@ -121,7 +122,7 @@ public class DoubleballManager {
         return doubleballStatisticsMapper.updateBallById(id,issue,red_one,red_two,red_three,red_four,red_five,red_six,blue,draw_prize_date);
     }
 
-    //  通过id删除记录
+    //  通过id删除记录（从"双色球信息统计表doubleballstatistics"）
     public void deleteBallById(int id){
         doubleballStatisticsMapper.deleteBallById(id);
     }
@@ -161,7 +162,7 @@ public class DoubleballManager {
         return doubleballRecord;
     }
 
-    //   将统计数据插入到doubleballcalculate表
+    //   将统计数据插入到"计算双色球统计信息结果表doubleballcalculate"
     public void insertCalculateData(int[] red,int[] blue){
         int red_one,red_two,red_three,red_four,red_five,red_six,red_seven,red_eight,red_nine,red_ten,red_eleven,red_twelve,red_thirteen,red_fourteen,red_fifteen,red_sixteen,red_seventeen,red_eighteen,red_nineteen,red_twenty,red_twenty_one,red_twenty_two,red_twenty_three,red_twenty_four,red_twenty_five,red_twenty_six,red_twenty_seven,red_twenty_eight,red_twenty_nine,red_thirty,red_thirty_one, red_thirty_two,red_thirty_three,blue_one,blue_two,blue_three,blue_four,blue_five,blue_six,blue_seven,blue_eight,blue_nine,blue_ten,blue_eleven,blue_twelve,blue_thirteen,blue_fourteen,blue_fifteen,blue_sixteen;
         red_one=red[0];
@@ -219,6 +220,11 @@ public class DoubleballManager {
         String calculate_date = simpleDateFormat.format(new Date());
         doubleballCalculateMapper.insertBallCalculate(red_one,red_two,red_three,red_four,red_five,red_six,red_seven,red_eight,red_nine,red_ten,red_eleven,red_twelve,red_thirteen,red_fourteen,red_fifteen,red_sixteen,red_seventeen,red_eighteen,red_nineteen,red_twenty,red_twenty_one,red_twenty_two,red_twenty_three,red_twenty_four,red_twenty_five,red_twenty_six,red_twenty_seven,red_twenty_eight,red_twenty_nine,red_thirty,red_thirty_one, red_thirty_two,red_thirty_three,blue_one,blue_two,blue_three,blue_four,blue_five,blue_six,blue_seven,blue_eight,blue_nine,blue_ten,blue_eleven,blue_twelve,blue_thirteen,blue_fourteen,blue_fifteen,blue_sixteen, calculate_date);
 
+    }
+
+    //  获取最新记录（从"计算双色球统计信息结果表doubleballcalculate"）
+    public DoubleballCalculate getStatistics(){
+        return doubleballCalculateMapper.getBallCalculateLimitOne();
     }
 
 }

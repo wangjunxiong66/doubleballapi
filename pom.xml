@@ -109,19 +109,19 @@
         <!--</dependency>-->
 
 
-        <!--&lt;!&ndash;Selenium automates browsers. That's it! What you do with that power is entirely up to you (selenium-java就是client， 它可以和本地浏览器直接交互（通过各个浏览器自身提供的driver）)&ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>org.seleniumhq.selenium</groupId>-->
-            <!--<artifactId>selenium-java</artifactId>-->
-            <!--<version>3.12.0</version>-->
-        <!--</dependency>-->
+        <!--Selenium automates browsers. That's it! What you do with that power is entirely up to you (selenium-java就是client， 它可以和本地浏览器直接交互（通过各个浏览器自身提供的driver）)-->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.12.0</version>
+        </dependency>
 
-        <!--&lt;!&ndash;Selenium automates browsers. That's it! What you do with that power is entirely up to you (Selenium使浏览器能够自动化。就这样！你用它做什么完全取决于你。主要就是驱动谷歌浏览器)&ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>org.seleniumhq.selenium</groupId>-->
-            <!--<artifactId>selenium-chrome-driver</artifactId>-->
-            <!--<version>3.12.0</version>-->
-        <!--</dependency>-->
+        <!--Selenium automates browsers. That's it! What you do with that power is entirely up to you (Selenium使浏览器能够自动化。就这样！你用它做什么完全取决于你。主要就是驱动谷歌浏览器)-->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-chrome-driver</artifactId>
+            <version>3.12.0</version>
+        </dependency>
 
     </dependencies>
 

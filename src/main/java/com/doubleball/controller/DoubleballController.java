@@ -97,12 +97,20 @@ public class DoubleballController {
         return doubleballService.getRandomNum();
     }
 
-    //  统计每个球出现的次数
-    @GetMapping("/calculateball")
-    public void calculateBall() {
+    //  查询每个球出现的次数的统计数据（从"计算双色球统计信息结果表doubleballcalculate"）
+    @GetMapping("/getstatistics")
+    public ServiceResult getStatistics() {
         System.out.println(DateTime.now());
         LOG.info("当前是 {} 的 {} 方法",this.getClass().getName(),new Exception().getStackTrace()[0].getMethodName());
-        doubleballService.calculateBall();
+        return doubleballService.getStatistics();
+    }
+
+    //  查询每个球出现的次数的统计数据，并分为红球统计数据和蓝球统计数据（从"计算双色球统计信息结果表doubleballcalculate"）
+    @GetMapping("/getstatisticsdivide")
+    public ServiceResult getStatisticsDivide() {
+        System.out.println(DateTime.now());
+        LOG.info("当前是 {} 的 {} 方法",this.getClass().getName(),new Exception().getStackTrace()[0].getMethodName());
+        return doubleballService.getStatisticsDivide();
     }
 
 }
