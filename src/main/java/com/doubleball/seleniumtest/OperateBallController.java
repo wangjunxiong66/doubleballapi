@@ -2,6 +2,10 @@ package com.doubleball.seleniumtest;
 
 import org.apache.commons.io.FileUtils;
 import org.joda.time.DateTime;
+import org.mortbay.jetty.Server;
+import org.mortbay.jetty.nio.SelectChannelConnector;
+import org.mortbay.jetty.webapp.WebAppContext;
+import org.openqa.grid.web.servlet.DriverServlet;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -17,6 +21,7 @@ import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+//import org.openqa.selenium.remote.server.DriverServlet;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -29,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.Servlet;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -159,22 +165,37 @@ public class OperateBallController {
     @RequestMapping(value = "/browser",method = RequestMethod.GET)
     public void testWebDriverEvent(){
 
-        String geckodriverPath = System.getProperty("user.dir") + "/src/main/resources/geckodriver-v0.24.0-macos";
-        //  指定firefox的安装路径
-        System.setProperty("webdriver.gecko.driver", geckodriverPath);
-
-        WebDriver driver = new FirefoxDriver();
-        WebDriverWait wait = new WebDriverWait(driver, 300) ;
-        EventFiringWebDriver eventFiringDriver = new EventFiringWebDriver(driver);
-        MyEventListener myEventlistener = new MyEventListener();
-        eventFiringDriver.register( myEventlistener);
-        eventFiringDriver.get("http://www.baidu.com");
-        eventFiringDriver.get("http://www.hao123.com");
-        eventFiringDriver.navigate().back();
-        WebElement webElement = eventFiringDriver.findElement(By.id("kw"));
-        webElement.sendKeys("selenium");
-        eventFiringDriver.findElement( By.id("su")).click();
-        driver.quit();
+//        String geckodriverPath = System.getProperty("user.dir") + "/src/main/resources/geckodriver-v0.24.0-macos";
+//        //  指定firefox的安装路径
+//        System.setProperty("webdriver.gecko.driver", geckodriverPath);
+//
+//        WebDriver driver = new FirefoxDriver();
+//        WebDriverWait wait = new WebDriverWait(driver, 300) ;
+//        EventFiringWebDriver eventFiringDriver = new EventFiringWebDriver(driver);
+//        MyEventListener myEventlistener = new MyEventListener();
+//        eventFiringDriver.register( myEventlistener);
+//        eventFiringDriver.get("http://www.baidu.com");
+//        eventFiringDriver.get("http://www.hao123.com");
+//        eventFiringDriver.navigate().back();
+//        WebElement webElement = eventFiringDriver.findElement(By.id("kw"));
+//        webElement.sendKeys("selenium");
+//        eventFiringDriver.findElement( By.id("su")).click();
+//        driver.quit();
+        Server server = new Server();
+        WebAppContext context = new WebAppContext() ;
+        context.setContextPath("");
+        File st = new File(".");
+        context.setWar( st.getPath());
+        server.addHandler(context);
+        context.addServlet(DriverServlet.class, "/wd/*");
+        SelectChannelConnector connector = new SelectChannelConnector() ;
+        connector.setPort( 3002) ;
+        server.addConnector( connector);
+        try {
+            server.start() ;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 //====  以下是cookie的操作  ====  以下是cookie的操作  ========  以下是cookie的操作  ========  以下是cookie的操作  ========  以下是cookie的操作  ====

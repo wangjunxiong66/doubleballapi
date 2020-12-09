@@ -1,0 +1,14 @@
+CREATE TABLE `doubleballstatistics` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `issue` int(10) unsigned NOT NULL COMMENT '期限id',
+  `red_one` int(5) NOT NULL COMMENT '红球1',
+  `red_two` int(5) NOT NULL COMMENT '红球2',
+  `red_three` int(5) NOT NULL COMMENT '红球3',
+  `red_four` int(5) NOT NULL COMMENT '红球4',
+  `red_five` int(5) NOT NULL COMMENT '红球5',
+  `red_six` int(5) NOT NULL COMMENT '红球6',
+  `blue` int(5) NOT NULL COMMENT '蓝球',
+  `draw_prize_date` varchar(20) NOT NULL COMMENT '开奖日期',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='双色球信息统计';
+
